@@ -1,0 +1,1 @@
+'databaseurl': "https://comp303-project-3871f-default-rtdb.firebaseio.com",
