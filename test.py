@@ -1,25 +1,44 @@
-import pyrebase
+import requests
 
-#firebase bağlantısı
-firebaseConfig = { 'apiKey': "AIzaSyC2neSPwNwg_ZQxYzKcyoh6qPqlhNOlaH0",
-  'authDomain': "comp303-project-3871f.firebaseapp.com",
-  'databaseURL': "https://comp303-project-3871f-default-rtdb.firebaseio.com",
-  'projectId': "comp303-project-3871f",
-  'storageBucket': "comp303-project-3871f.firebasestorage.app",
-  'messagingSenderId': "103364531587",
-  'appId': "1:103364531587:web:e0ac5e619c0dc2fc6a92b6",
-  'measurementId': "G-C61LSWEHR5"
-}
+BASE_URL = "http://127.0.0.1:5000/api"  # Flask uygulamanızın temel URL'si
 
-firebase = pyrebase.initialize_app(firebaseConfig)
-auth = firebase.auth()
+def test_signup():
+    print("Testing signup...")
+    payload = {
+        "username": "testuser",
+        "email": "testuser@example.com",
+        "password": "testpassword123"
+    }
+    response = requests.post(f"{BASE_URL}/signup", json=payload)
+    print(f"Signup Response: {response.status_code}, {response.json()}\n")
 
-def signup():
-    email=input("Enter your email: ")
-    password=input("Enter your password: ")
-    user=auth.create_user_with_email_and_password(email, password)
-    print("User created successfully")
+def test_login():
+    print("Testing login...")
+    payload = {
+        "username": "testuser",
+        "password": "testpassword123"
+    }
+    response = requests.post(f"{BASE_URL}/login", json=payload)
+    print(f"Login Response: {response.status_code}, {response.json()}\n")
+    if response.status_code == 200:
+        token = response.json().get("access_token")
+        print(f"Access Token: {token}")
+        return token
+    return None
 
-signup()
+def test_protected_route(token):
+    print("Testing protected route...")
+    headers = {"Authorization": f"Bearer {token}"}
+    response = requests.get(f"{BASE_URL}/protected", headers=headers)
+    print(f"Protected Route Response: {response.status_code}, {response.json()}\n")
 
-    
+if __name__ == "__main__":
+    # 1. Kayıt olmayı test et
+    test_signup()
+
+    # 2. Giriş yapmayı test et
+    token = test_login()
+
+    # 3. Token ile korumalı bir rota test et
+    if token:
+        test_protected_route(token)
