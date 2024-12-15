@@ -84,6 +84,40 @@ def login():
     except Exception as e:
         logging.error(f"Error in login: {e}")
         return jsonify({'error': 'Internal server error'}), 500
+    
+#Password Reset
+@app.route('/api/reset', methods=['POST'])
+def reset():
+    try:
+        data = request.json
+        email = data.get('email')
+        new_password = data.get('password')
+
+        # Alanlar kontrol ediliyor
+        if not email or not new_password:
+            return jsonify({'error': 'Missing fields'}), 400
+
+        # Kullanıcıyı email ile bul
+        users = db.collection('users').where('email', '==', email).stream()
+        user_doc = None
+        for user in users:
+            user_doc = user
+            break
+
+        if not user_doc:
+            return jsonify({'error': 'User not found'}), 404
+
+        # Yeni şifreyi hashleyip Firestore'da güncelle
+        hashed_password = pwd_context.hash(new_password)
+        db.collection('users').document(user_doc.id).update({
+            'password': hashed_password
+        })
+
+        return jsonify({'message': 'Password reset successfully!'}), 200
+    except Exception as e:
+        logging.error(f"Error in reset: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
 
 # JWT Doğrulama
 @app.route('/api/protected', methods=['GET'])

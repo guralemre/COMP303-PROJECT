@@ -5,18 +5,18 @@ BASE_URL = "http://127.0.0.1:5000/api"  # Flask uygulamanızın temel URL'si
 def test_signup():
     print("Testing signup...")
     payload = {
-        "username": "testuser",
-        "email": "testuser@example.com",
+        "username": "emre123",
+        "email": "admin@example.com",
         "password": "testpassword123"
     }
     response = requests.post(f"{BASE_URL}/signup", json=payload)
     print(f"Signup Response: {response.status_code}, {response.json()}\n")
 
-def test_login():
+def test_login(new_password=False):
     print("Testing login...")
     payload = {
-        "username": "testuser",
-        "password": "testpassword123"
+        "username": "emre123",
+        "password": "testpassword123" if new_password else "newtestpassword123"
     }
     response = requests.post(f"{BASE_URL}/login", json=payload)
     print(f"Login Response: {response.status_code}, {response.json()}\n")
@@ -25,6 +25,15 @@ def test_login():
         print(f"Access Token: {token}")
         return token
     return None
+
+def test_password_reset():
+    print("Testing password reset...")
+    payload = {
+        "email": "admin@example.com",
+        "password": "newtestpassword123"
+    }
+    response = requests.post(f"{BASE_URL}/reset", json=payload)
+    print(f"Password Reset Response: {response.status_code}, {response.json()}\n")
 
 def test_protected_route(token):
     print("Testing protected route...")
@@ -40,5 +49,12 @@ if __name__ == "__main__":
     token = test_login()
 
     # 3. Token ile korumalı bir rota test et
+    if token:
+        test_protected_route(token)
+
+    # 4. Şifre sıfırlamayı test et
+    test_password_reset()
+    # 5. Yeni şifre ile giriş yapmayı test et
+    token = test_login()
     if token:
         test_protected_route(token)
