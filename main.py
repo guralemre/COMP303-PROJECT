@@ -6,6 +6,8 @@ import jwt
 from passlib.context import CryptContext
 import logging
 
+
+
 # Firebase Ayarları
 cred = credentials.Certificate('firebase_key.json')
 firebase_admin.initialize_app(cred)
@@ -139,6 +141,66 @@ def protected_route():
 @app.route('/api/hello', methods=['GET'])
 def hello_world():
     return jsonify(message="Connected from Flask!")
+
+@app.route('/api/favorites', methods=['POST'])
+def add_to_favorites():
+    try:
+        # Token doğrulama
+        token = request.headers.get('Authorization', '').replace('Bearer ', '')
+        if not token:
+            return jsonify({'error': 'Token is missing'}), 401
+
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username = payload.get('sub')
+
+        if not username:
+            return jsonify({'error': 'Invalid token'}), 401
+
+        # İstekten öğe verilerini al
+        data = request.json
+        item = data.get('item')
+
+        if not item:
+            return jsonify({'error': 'Missing item'}), 400
+
+        # Favorilere ekle
+        favorites_ref = db.collection('users').document(username).collection('favorites')
+        favorites_ref.add({'item': item})
+
+        return jsonify({'message': 'Item added to favorites!'}), 200
+    except jwt.ExpiredSignatureError:
+        return jsonify({'error': 'Token has expired'}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({'error': 'Invalid token'}), 401
+    except Exception as e:
+        logging.error(f"Error in add_to_favorites: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+
+# Favorileri Getirme
+@app.route('/api/favorites', methods=['GET'])
+def get_favorites():
+    try:
+        username = request.args.get('username')
+
+        if not username:
+            return jsonify({'error': 'Missing username'}), 400
+
+        # Kullanıcıyı veritabanından al
+        user = get_user(username)
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        # Favorileri al
+        favorites_ref = db.collection('users').document(username).collection('favorites')
+        favorites = [doc.to_dict() for doc in favorites_ref.stream()]
+
+        return jsonify({'favorites': favorites}), 200
+    except Exception as e:
+        logging.error(f"Error in get_favorites: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
