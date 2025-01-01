@@ -1,0 +1,25 @@
+.team-content{
+    gap: 4rem;
+}
+.team-item img{
+    max-width: 200px;
+    transition: var(--transition);
+}
+.team-item img:hover{
+    transform: scale(1.1);
+}
+.team-item p{
+    margin: 2.6rem 0 0.6rem;
+}
+
+@media screen and (min-width: 768px) {
+    .team-content{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (min-width: 992px) {
+    .team-content{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+

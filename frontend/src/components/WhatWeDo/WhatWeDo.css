@@ -1,0 +1,20 @@
+ .what-we-do-item{
+    padding: 6rem;
+    gap: 6rem;
+ }
+ .what-we-do-item img{
+    max-width: 520px;
+ }
+ .what-we-do-item .text {
+    max-width: 680px;
+ }
+ @media screen and (min-width: 992px) {
+    .what-we-do-item{
+        grid-template-columns: repeat(2, 1fr);
+        align-items: center;
+        text-align: left;
+    }
+    .what-we-do-item:nth-child(even) .what-we-do-item-left{
+        order: 2;
+    }
+ }

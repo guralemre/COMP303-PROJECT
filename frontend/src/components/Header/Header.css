@@ -1,0 +1,55 @@
+/* Header Wrapper */
+.header {
+    flex-direction: column;
+    background-color: var(--red-color);
+}
+
+/* Header Content */
+.header-content {
+    row-gap: 3rem;
+    min-height: calc(100vh - 80px);
+}
+.header-content-right img {
+    max-width: 100%; /* Resmi kapsayıcının genişliğine sığdır */
+    height: 600px;    /* Oranları koruyarak yüksekliği ayarla */
+    display: block;  /* Tarayıcıdan kaynaklanan boşlukları kaldır */
+    object-fit: contain; /* Resmi kapsayıcıya uygun şekilde yerleştir */
+}
+
+
+/* Header Title */
+.header-title {
+    margin-bottom: 3.5rem;
+}
+
+
+
+.btn-red {
+    padding: 0.8rem 1.5rem;
+    background-color: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-red:hover {
+    background-color: darkred;
+}
+
+
+@media screen and (min-width: 992px) {
+    .header-content-right img{
+        grid-template-columns: 2fr 3fr;
+        align-items: center;
+        text-align: left;
+        column-gap: 6rem;
+    }
+}
+@media screen and (max-width: 768px) {
+    .search-input {
+        width: 300px; 
+    }
+}

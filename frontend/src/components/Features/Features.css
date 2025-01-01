@@ -1,0 +1,36 @@
+.features-content{
+    gap: 3rem;
+}
+.features-item-icon img{
+    max-width: 50px;
+}
+.features-item-icon{
+    margin-bottom: 2rem;
+}
+.features-item-text .text{
+    max-width: 380px;
+}
+.features-item:hover{
+    background-color: var(--red-color);
+    color: var(--white-color);
+}
+
+@media screen and (min-width: 578px) {
+    .features-item{
+        display: flex;
+        text-align: left;
+    }
+    .features-item-icon{
+        margin-right: 3rem;
+    }
+}
+@media screen and (min-width: 768px) {
+    .features-content{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media screen and (min-width: 1200px) {
+    .features-content{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

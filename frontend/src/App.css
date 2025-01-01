@@ -1,38 +1,160 @@
-.App {
-  text-align: center;
+.container{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.section__padding{
+  padding: 6rem;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.flex{
   display: flex;
-  flex-direction: column;
+}
+.flex__center{
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.grid{
+  display: grid;
 }
 
-.App-link {
-  color: #61dafb;
+/* textx and paragraphs */
+.text{
+  line-height: 1.7;
+  font-weight: 300;
+  opacity: 0.9;
+  letter-spacing: 1px;
+}
+.text-center{
+  text-align: center;
+}
+.text-upper{
+  text-transform: uppercase;
+}
+.text-cap{
+  text-transform: capitalize;
+}
+.text-white{
+  color: var(--white-color);
+}
+.text-dark{
+  color: var(--dark-color);
+}
+.text-red{
+  color: var(--red-color);
+}
+.text{
+  margin: 1rem 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* fontlar */
+.fw-2{
+  font-weight: 200;
+}
+.fw-3{
+  font-weight: 300;
+}
+.fw-4{
+  font-weight: 400;
+}
+.fw-5{
+  font-weight: 500;
+}
+.fw-6{
+  font-weight: 600;
+}
+.fw-7{
+  font-weight: 700;
+}
+.fw-8{
+  font-weight: 800;
+}
+.fs-16{
+  font-size: 16px;
+}
+.fs-18{
+  font-size: 18px;
+}
+.fs-20{
+  font-size: 20px;
+}
+.fs-22{
+  font-size: 22px;
+}
+/*backgrounds*/
+.bg-transparent{
+  background-color: transparent;
+}
+.bg-white{
+  background-color: var(--white-color);
+}
+.bg-dark{
+  background-color: var(--dark-color);
+}
+.bg-red{
+  background-color: var(--red-color);
+}
+.bg-lightgrey{
+  background-color: var(--light-grey);
+}
+/*buttons*/
+.btn{
+  display: inline-block;
+  color: var(--white-color);
+  letter-spacing: 1px;
+  transition: var(--transition);
+  text-transform: capitalize;
+  padding: 1rem 1.8rem;
+  margin-top: 1.8rem;
+  font-weight: 600;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+}
+.btn:hover{
+  box-shadow: rgba(0, 0, 0, 0.2) 0 10px 15px -3px, rgba(0, 0, 0, 0.1) 0 4px 6px -2px;
+}
+.btn span{
+  margin-right: 0.4rem;
+}
+.btn-dark{
+  background-color: var(--dark-color);
+}
+.btn-red{
+  background-color: var(--red-color);
+}
+
+/*spacings*/
+.ls-1{
+  letter-spacing: 1px;
+}
+.ls-2{
+  letter-spacing: 2px;
+}
+.py-6{
+ padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+.py-4{
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+/*margin auto*/
+.mx-auto{
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/*animation and transition stopper*/
+.resize-animation-stopper *{
+  animation: none !important;
+  transition: none !important;
+}
+
+.section-title{
+  width: 320px;
+  margin: 0 auto!important;
+  padding: 1rem;
+}
+
+.App{
+  overflow-x: hidden;
 }
