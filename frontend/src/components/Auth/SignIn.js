@@ -20,7 +20,6 @@ const SignIn = ({ onEnter }) => {
 
     try {
       if (isForgotPassword) {
-        // Şifre sıfırlama isteği
         const response = await fetch('http://localhost:5000/api/reset', {
           method: 'POST',
           headers: {
@@ -44,7 +43,6 @@ const SignIn = ({ onEnter }) => {
           setResetSuccess(false);
         }, 3000);
       } else {
-        // Normal giriş/kayıt isteği
         const endpoint = isLogin ? '/api/login' : '/api/signup';
         const response = await fetch(`http://localhost:5000${endpoint}`, {
           method: 'POST',
@@ -95,18 +93,24 @@ const SignIn = ({ onEnter }) => {
 
   return (
     <div className="auth-container">
+      <iframe
+        className="background-video"
+        src="https://www.youtube.com/embed/SmnqsdeHFT0?autoplay=1&mute=1&loop=1&playlist=SmnqsdeHFT0"
+        frameBorder="0"
+        allow="autoplay; encrypted-media"
+        allowFullScreen
+        title="Background Video"
+      ></iframe>
       <div className="auth-box">
         <h2>
           {isForgotPassword 
             ? 'Forgot Password' 
             : (isLogin ? 'Login' : 'Register')}
         </h2>
-        
         {error && <div className="auth-error">{error}</div>}
         {resetSuccess && (
           <div className="auth-success">Your password has been reset successfully!</div>
         )}
-        
         <form onSubmit={handleSubmit}>
           {!isForgotPassword && (
             <div className="form-group">
@@ -120,7 +124,6 @@ const SignIn = ({ onEnter }) => {
               />
             </div>
           )}
-          
           {(isForgotPassword || !isLogin) && (
             <div className="form-group">
               <input
@@ -133,7 +136,6 @@ const SignIn = ({ onEnter }) => {
               />
             </div>
           )}
-          
           <div className="form-group">
             <input
               type="password"
@@ -144,7 +146,6 @@ const SignIn = ({ onEnter }) => {
               required
             />
           </div>
-          
           <button type="submit" className="auth-button" disabled={loading}>
             {loading ? 'İşleniyor...' : (
               isForgotPassword ? 'Forgot Password' :
@@ -152,7 +153,6 @@ const SignIn = ({ onEnter }) => {
             )}
           </button>
         </form>
-        
         <div className="auth-links">
           {!isForgotPassword && (
             <button 
@@ -165,7 +165,6 @@ const SignIn = ({ onEnter }) => {
               Forgot password?
             </button>
           )}
-          
           <div className="auth-switch">
             {!isForgotPassword && (
               <p>
@@ -182,7 +181,6 @@ const SignIn = ({ onEnter }) => {
               </p>
             )}
           </div>
-
           {isForgotPassword && (
             <button 
               onClick={() => {
@@ -200,4 +198,4 @@ const SignIn = ({ onEnter }) => {
   );
 };
 
-export default SignIn; 
+export default SignIn;
